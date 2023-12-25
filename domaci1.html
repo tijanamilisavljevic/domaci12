@@ -1,0 +1,63 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, initial-scale=1.0"
+        />
+        <title>Doc1</title>
+        <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        ></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <style>
+            th, td {
+                border-style: none;
+                text-align: left;
+                padding: 10px;
+            }
+        </style>
+        <script src="items.js"></script>
+        <script>
+            let suma1 = 0;
+            const renderItem = (item) => {
+                const $row = $(`<tr>
+                        <td>${item.naziv}</td>
+                        <td>${item.cena}</td>
+                        <td>
+                            <span class="item-count">${item.komada}</span>
+                        </td>
+                        <td class="item-ukupno">${item.cena*item.komada}</td>
+                    </tr>`);
+                return $row;
+            };
+            
+            const renderItemsList = (list) => {
+                for (let i = 0; i < list.length; i++) {
+                    const item = list[i];
+                    $("#item-list").append(renderItem(item));
+                    suma1 += (item["cena"]*item["komada"]);
+                }
+                $("#item-list").append(`<tr>
+                    <th><p id="ukupno"></p></th>
+                </tr>`)
+                $("#ukupno").text(suma1);
+    
+            };
+            let data;
+            $(document).ready(async () => {
+                renderItemsList(items);
+            });
+        </script>
+    </head>
+    <body>
+        <table id="item-list">
+        <tr>
+            <th><b>Naziv</b></th>
+            <th><b>Cena</b></th>
+            <th><b>Kolicina</b></th>
+            <th><b>Ukupna cena</b></th>
+        </tr>
+        </table>
+    </body>
+</html>
